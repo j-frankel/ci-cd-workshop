@@ -7,5 +7,3 @@ function subtract(a, b) {
 }
 
 module.exports = { add, subtract };
-
-// const x = "this line exceeds the max length. xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
