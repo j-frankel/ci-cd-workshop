@@ -1,8 +1,19 @@
-name: CICD
+name: CI/CD
 
 on:
   push:
+    branches:
+      - main
+      - demo-failing-test
+      - demo-passing
+      - demo-lint-fail
   pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
   ci_test:
@@ -25,3 +36,22 @@ jobs:
 
       - name: Run tests
         run: npm test
+
+  deploy:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: ci_test
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
