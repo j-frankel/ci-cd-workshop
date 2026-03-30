@@ -1,4 +1,4 @@
-const { add, subtract } = require('../src/math');
+const { add, subtract } = require('../public/math');
 
 test('adds two numbers correctly', () => {
   expect(add(2, 3)).toBe(5);
